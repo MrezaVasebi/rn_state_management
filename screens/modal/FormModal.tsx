@@ -1,9 +1,10 @@
 import React from "react";
-import { Modal, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { AppText, SimpleButton } from "../../components";
 import InputWithLabel from "../../components/InputWithLabel";
 import { userType } from "../../types";
 import { appColors } from "../../utils";
+import { RootModal } from "./components";
 import { useFormModal } from "./logic";
 
 interface IFromModal {
@@ -22,61 +23,52 @@ const FormModal = (props: IFromModal) => {
   ];
 
   return (
-    <Modal transparent statusBarTranslucent animationType="fade">
-      <View style={styles.root}>
-        <View style={styles.innerStyle}>
-          <AppText label="Add User Info" lblStyle={styles.titleStyle} />
+    <RootModal>
+      <AppText label="Add User Info" lblStyle={styles.titleStyle} />
 
-          <View style={styles.wrapCOntainer}>
-            {formItem.map((el, index) => {
-              return (
-                <InputWithLabel
-                  key={index}
-                  label={el.lbl}
-                  placeholder={el.placeholder}
-                  rootStyle={styles.itemStyle}
-                  onChangeText={(value: string) =>
-                    hooks.setValues(el.identifier, value)
-                  }
-                />
-              );
-            })}
-          </View>
-
-          <View style={styles.btnStyle}>
-            <SimpleButton
-              label="Save"
-              onPress={hooks.passUserInfo}
-              btnStyle={{ width: "25%" }}
+      <View style={styles.wrapContainer}>
+        {formItem.map((el, index) => {
+          return (
+            <InputWithLabel
+              key={index}
+              label={el.lbl}
+              placeholder={el.placeholder}
+              rootStyle={styles.itemStyle}
+              onChangeText={(value: string) =>
+                hooks.setValues(el.identifier, value)
+              }
             />
-
-            <SimpleButton
-              label="Cancel"
-              btnStyle={styles.cancelStyle}
-              onPress={props.onCloseModal}
-            />
-          </View>
-        </View>
+          );
+        })}
       </View>
-    </Modal>
+
+      <View style={styles.btnStyle}>
+        <SimpleButton
+          label="Save"
+          onPress={hooks.passUserInfo}
+          btnStyle={{ width: "25%" }}
+        />
+
+        <SimpleButton
+          label="Cancel"
+          btnStyle={styles.cancelStyle}
+          onPress={props.onCloseModal}
+        />
+      </View>
+    </RootModal>
   );
 };
 
 export default FormModal;
 
 const styles = StyleSheet.create({
-  root: {
-    flex: 1,
-    justifyContent: "flex-end",
-    backgroundColor: "rgba(0,0,0,.5)",
-  },
   titleStyle: {
     fontSize: 25,
     marginBottom: 15,
     fontWeight: "500",
     fontStyle: "normal",
   },
-  wrapCOntainer: {
+  wrapContainer: {
     flexWrap: "wrap",
     alignItems: "center",
     flexDirection: "row",
@@ -85,13 +77,6 @@ const styles = StyleSheet.create({
   itemStyle: {
     width: "49%",
     marginBottom: 15,
-  },
-  innerStyle: {
-    padding: 20,
-    height: "80%",
-    borderTopLeftRadius: 30,
-    borderTopRightRadius: 30,
-    backgroundColor: appColors.white,
   },
   btnStyle: {
     marginTop: 15,
