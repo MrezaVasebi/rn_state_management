@@ -8,11 +8,11 @@ import {
 } from "../components";
 import { UserContext } from "../st-management/context-api";
 import { UserContextType, userType } from "../types";
-import { useUserList } from "./logic";
+import { useCtxUserList } from "./logic";
 import { FormModal } from "./modal";
 
 const CtxUserList = () => {
-  const hooks = useUserList();
+  const hooks = useCtxUserList();
   const userCtx = useContext(UserContext) as UserContextType;
 
   return (

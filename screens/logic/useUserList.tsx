@@ -1,5 +1,5 @@
 import { useContext, useEffect, useReducer } from "react";
-import { UserContext } from "../../st-management/context-api/UserContext";
+import { UserContext } from "../../st-management/context-api";
 import { UserContextType, userType } from "../../types";
 
 export const useUserList = () => {
