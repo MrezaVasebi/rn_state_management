@@ -42,7 +42,7 @@ export const UserProvider = (props: IUserProvider) => {
 
   const undoDeletedUser = (index: number, user: userType) => {
     let newData = [...state.users];
-    newData.splice(index, 0, user);
+    newData.splice(index, 0, user); // adding item to specific index in array
 
     dispatch(set_users(newData));
   };

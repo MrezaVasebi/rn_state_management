@@ -6,6 +6,7 @@ export type userType = {
   fullName: string;
 };
 
+// this section in used in context-api
 export type UserContextType = {
   users: userType[];
   onDeleteUser: (id: string) => void;

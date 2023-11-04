@@ -1,10 +1,20 @@
-import UserList from "./screens/UserList";
+import { CtxUserList } from "./screens";
 import { UserProvider } from "./st-management/context-api/UserContext";
 
 export default function App() {
-  return (
-    <UserProvider>
-      <UserList />
-    </UserProvider>
-  );
+  let state_management = "context";
+
+  if (state_management === "context") {
+    return (
+      <UserProvider>
+        <CtxUserList />
+      </UserProvider>
+    );
+  }
+
+  // return (
+  //   <UserProvider>
+  //     <CtxUserList />
+  //   </UserProvider>
+  // );
 }
