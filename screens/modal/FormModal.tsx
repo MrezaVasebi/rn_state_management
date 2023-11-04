@@ -1,6 +1,6 @@
 import React from "react";
 import { Modal, StyleSheet, View } from "react-native";
-import { AppButton, AppText } from "../../components";
+import { AppText, SimpleButton } from "../../components";
 import InputWithLabel from "../../components/InputWithLabel";
 import { userType } from "../../types";
 import { appColors } from "../../utils";
@@ -44,13 +44,13 @@ const FormModal = (props: IFromModal) => {
           </View>
 
           <View style={styles.btnStyle}>
-            <AppButton
+            <SimpleButton
               label="Save"
               onPress={hooks.passUserInfo}
               btnStyle={{ width: "25%" }}
             />
 
-            <AppButton
+            <SimpleButton
               label="Cancel"
               btnStyle={styles.cancelStyle}
               onPress={props.onCloseModal}

@@ -1,11 +1,12 @@
 export const appColors = {
   grey: "grey",
   white: "white",
+  black: "black",
   red: "#d90429",
-  blue: "#0081a7",
+  blue: "#5ABD8C",
   bgColor: "#F5F5F5",
   txtBack: "#e6e6e6",
-  txtPlaceColor: "#ccc5b9",
+  txtPlaceColor: "#212121",
 
   borderColors: {
     grey: "grey",

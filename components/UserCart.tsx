@@ -37,15 +37,10 @@ const UserCart = ({
         </TouchableOpacity>
       </View>
 
-      <View style={{ flexDirection: "row" }}>
-        <ItemRow ans={item.fullName} icon="user" />
-        <ItemRow ans={item.mobile} icon="mobile" />
-      </View>
-
-      <View style={{ flexDirection: "row", marginTop: 20 }}>
-        <ItemRow ans={item.email} icon="email" />
-        <ItemRow ans={item.address} icon="address" />
-      </View>
+      <ItemRow ans={item.fullName} icon="user" />
+      <ItemRow ans={item.mobile} icon="mobile" />
+      <ItemRow ans={item.email} icon="email" />
+      <ItemRow ans={item.address} icon="address" />
     </View>
   );
 };
@@ -59,5 +54,10 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     backgroundColor: appColors.white,
   },
-  itemStyle: { flex: 1, flexDirection: "row", alignItems: "flex-start" },
+  itemStyle: {
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "flex-start",
+    marginBottom: 10,
+  },
 });

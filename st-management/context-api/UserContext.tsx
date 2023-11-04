@@ -40,12 +40,20 @@ export const UserProvider = (props: IUserProvider) => {
     dispatch(set_users(newData));
   };
 
+  const undoDeletedUser = (index: number, user: userType) => {
+    let newData = [...state.users];
+    newData.splice(index, 0, user);
+
+    dispatch(set_users(newData));
+  };
+
   return (
     <UserContext.Provider
       value={{
         users: state.users,
         onSaveUser: onSaveUser,
         onDeleteUser: onDeleteUser,
+        undoDeletedUser: undoDeletedUser,
       }}
     >
       {props.children}
