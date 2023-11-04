@@ -1,7 +1,6 @@
 import React from "react";
 import { StyleSheet, TextInputProps, TextStyle, View } from "react-native";
 import AppInput from "./AppInput";
-import AppText from "./AppText";
 
 interface IInputWithLabel {
   label: string;
@@ -15,10 +14,10 @@ const InputWithLabel = (
 ) => {
   return (
     <View style={{ ...styles.rootStyle, ...props.rootStyle }}>
-      <AppText
+      {/* <AppText
         label={props.label}
         lblStyle={{ ...styles.lblStyle, ...props.lblStyle }}
-      />
+      /> */}
 
       <AppInput
         onChangeText={props.onChangeText}

@@ -1,33 +1,28 @@
-import React from 'react'
-import { StyleSheet, TouchableOpacity, TouchableOpacityProps } from 'react-native'
-import { appColors } from '../utils'
-import AppText from './AppText'
+import React from "react";
+import {
+  StyleSheet,
+  TouchableOpacity,
+  TouchableOpacityProps,
+} from "react-native";
 
 interface IAppButton {
-  label: string
-  lblStyle?: object
-  btnStyle?: object
+  btnStyle?: object;
 }
 
-const AppBUtton = (props: TouchableOpacityProps & IAppButton) => {
+const AppButton = (props: TouchableOpacityProps & IAppButton) => {
   return (
-    <TouchableOpacity activeOpacity={0.5} onPress={props.onPress} disabled={props.disabled} style={{ ...styles.btnStyle, ...props.btnStyle }}>
-      <AppText label={props.label} lblStyle={{ ...styles.llbStyle, ...props.lblStyle }} />
+    <TouchableOpacity
+      onPress={props.onPress}
+      activeOpacity={0.5}
+      style={{ ...styles.btnStyle, ...props.btnStyle }}
+    >
+      {props.children}
     </TouchableOpacity>
-  )
-}
+  );
+};
 
-export default AppBUtton
+export default AppButton;
 
 const styles = StyleSheet.create({
-  btnStyle: {
-    height: 45,
-    borderRadius: 10,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: appColors.blue,
-  },
-  llbStyle: {
-    color: appColors.white,
-  },
-})
+  btnStyle: {},
+});

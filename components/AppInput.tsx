@@ -28,9 +28,9 @@ const styles = StyleSheet.create({
     height: 45,
     fontSize: 15,
     color: "black",
-    borderRadius: 5,
-    borderWidth: 0.5,
+    borderRadius: 10,
     paddingHorizontal: 10,
+    backgroundColor: "#EFEFEF",
     borderColor: appColors.borderColors.grey,
   },
 });
