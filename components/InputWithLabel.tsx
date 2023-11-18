@@ -20,9 +20,9 @@ const InputWithLabel = (
       /> */}
 
       <AppInput
-        onChangeText={props.onChangeText}
-        placeholder={props.placeholder}
         value={props.value}
+        placeholder={props.placeholder}
+        onChangeText={props.onChangeText}
         inputStyle={{ ...props.inputStyle }}
       />
     </View>
@@ -35,5 +35,6 @@ const styles = StyleSheet.create({
   rootStyle: {},
   lblStyle: {
     marginBottom: 5,
+    fontFamily: "medium",
   },
 });

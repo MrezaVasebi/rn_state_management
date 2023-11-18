@@ -8,7 +8,7 @@ const UndoView = ({ onPress }: { onPress: () => void }) => {
   return (
     <View style={styles.undoStyle}>
       <AppText
-        label="User Deleting User"
+        label="Undo Deleting User"
         lblStyle={{ color: appColors.white }}
       />
 

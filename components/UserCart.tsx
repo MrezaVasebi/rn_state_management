@@ -21,7 +21,9 @@ const UserCart = ({
   const ItemRow = ({ icon, ans }: IItemRow) => {
     return (
       <View style={styles.itemStyle}>
-        <Entypo name={icon} size={20} color={appColors.grey} />
+        <View style={{ opacity: 0.5 }}>
+          <Entypo name={icon} size={20} color={appColors.grey} />
+        </View>
 
         <AppText label={ans} lblStyle={styles.ansStyle} />
       </View>
@@ -64,13 +66,14 @@ const styles = StyleSheet.create({
   },
   ansStyle: {
     flex: 1,
+    fontSize: 15,
     marginLeft: 10,
   },
   itemStyle: {
     flex: 1,
+    marginBottom: 10,
     flexDirection: "row",
     alignItems: "flex-start",
-    marginBottom: 10,
   },
   eachRowStyle: {
     flexDirection: "row",

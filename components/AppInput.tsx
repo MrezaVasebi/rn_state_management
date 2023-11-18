@@ -29,6 +29,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color: "black",
     borderRadius: 10,
+    fontFamily: "medium",
     paddingHorizontal: 10,
     backgroundColor: "#EFEFEF",
     borderColor: appColors.borderColors.grey,

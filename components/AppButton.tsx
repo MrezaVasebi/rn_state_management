@@ -12,8 +12,8 @@ interface IAppButton {
 const AppButton = (props: TouchableOpacityProps & IAppButton) => {
   return (
     <TouchableOpacity
-      onPress={props.onPress}
       activeOpacity={0.5}
+      onPress={props.onPress}
       style={{ ...styles.btnStyle, ...props.btnStyle }}
     >
       {props.children}
