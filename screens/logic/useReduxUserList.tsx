@@ -1,6 +1,7 @@
 import { useEffect, useReducer } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  AppDispatch,
   RootState,
   onDeleteUser,
   onSaveUser,
@@ -9,14 +10,25 @@ import {
 import { userType } from "../../types";
 
 export const useReduxUserList = () => {
-  const userDispatch = useDispatch();
+  const userDispatch = useDispatch<AppDispatch>();
   let { users } = useSelector((state: RootState) => state.userReducer);
 
-  const initialState = {
-    showModal: false as boolean,
-    showUndoScreen: false as boolean,
-    deletedIndex: 0 as number,
-    deletedUser: {} as userType,
+  const initialState: {
+    showModal: boolean;
+    showUndoScreen: boolean;
+    deletedIndex: number;
+    deletedUser: userType;
+  } = {
+    showModal: false,
+    showUndoScreen: false,
+    deletedIndex: 0,
+    deletedUser: {
+      id: "",
+      email: "",
+      mobile: "",
+      address: "",
+      fullName: "",
+    },
   };
 
   const set_show_modal = (value: boolean) => ({
