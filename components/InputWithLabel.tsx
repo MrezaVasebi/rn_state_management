@@ -3,8 +3,8 @@ import { StyleSheet, TextInputProps, TextStyle, View } from "react-native";
 import AppInput from "./AppInput";
 
 interface IInputWithLabel {
-  label: string;
-  lblStyle?: object;
+  // label: string;
+  // lblStyle?: object;
   inputStyle?: object;
   rootStyle?: object;
 }

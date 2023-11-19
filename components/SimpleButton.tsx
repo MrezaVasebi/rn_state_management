@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: appColors.blue,
+    backgroundColor: appColors.green,
   },
   llbStyle: {
     color: appColors.white,

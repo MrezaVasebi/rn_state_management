@@ -3,7 +3,7 @@ export const appColors = {
   white: "white",
   black: "black",
   red: "#d90429",
-  blue: "#5ABD8C",
+  green: "#5ABD8C",
   bgColor: "#F5F5F5",
   txtBack: "#e6e6e6",
   txtPlaceColor: "#212121",
