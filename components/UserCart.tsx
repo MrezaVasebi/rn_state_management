@@ -7,16 +7,18 @@ import AppButton from "./AppButton";
 import AppText from "./AppText";
 
 interface IItemRow {
-  icon: keyof typeof Entypo.glyphMap;
   ans: string;
+  icon: keyof typeof Entypo.glyphMap;
 }
 
 const UserCart = ({
   item,
+  onPressEdit,
   onDeleteUser,
 }: {
   item: userType;
   onDeleteUser: (id: string) => void;
+  onPressEdit: (item: userType) => void;
 }) => {
   const ItemRow = ({ icon, ans }: IItemRow) => {
     return (
@@ -34,7 +36,14 @@ const UserCart = ({
     <View style={styles.rootStyle}>
       <View style={styles.itemContainer}>
         <AppButton onPress={() => onDeleteUser(item.id)}>
-          <AntDesign name="delete" color={appColors.red} size={25} />
+          <AntDesign name="delete" color={appColors.red} size={20} />
+        </AppButton>
+
+        <AppButton
+          btnStyle={{ marginRight: 10 }}
+          onPress={() => onPressEdit(item)}
+        >
+          <AntDesign name="edit" color={appColors.green} size={20} />
         </AppButton>
       </View>
 
@@ -56,13 +65,17 @@ export default UserCart;
 const styles = StyleSheet.create({
   rootStyle: {
     padding: 10,
+    elevation: 2,
+    borderRadius: 5,
     marginBottom: 10,
-    borderRadius: 10,
     backgroundColor: appColors.white,
   },
   itemContainer: {
-    marginBottom: 10,
-    alignItems: "flex-end",
+    marginTop: 10,
+    marginBottom: 15,
+    alignItems: "center",
+    justifyContent: "flex-start",
+    flexDirection: "row-reverse",
   },
   ansStyle: {
     flex: 1,

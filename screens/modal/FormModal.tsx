@@ -8,6 +8,7 @@ import { RootModal } from "./components";
 import { useFormModal } from "./logic";
 
 interface IFromModal {
+  editedUser: userType;
   onCloseModal: () => void;
   onSaveUser: (value: userType) => void;
 }
@@ -15,23 +16,17 @@ interface IFromModal {
 const FormModal = (props: IFromModal) => {
   const hooks = useFormModal(props);
 
-  let formItem = [
-    { lbl: "FullName", placeholder: "FullName", identifier: "fullName" },
-    { lbl: "Mobile", placeholder: "Mobile", identifier: "mobile" },
-    { lbl: "Email", placeholder: "Email", identifier: "email" },
-    { lbl: "Address", placeholder: "Address", identifier: "address" },
-  ];
-
   return (
     <RootModal>
       <AppText label="Add User Info" lblStyle={styles.titleStyle} />
 
       <View style={styles.wrapContainer}>
-        {formItem.map((el, index) => {
+        {hooks.formItem.map((el, index) => {
           return (
             <InputWithLabel
               key={index}
-              label={el.lbl}
+              value={el.value}
+              // label={el.lbl}
               placeholder={el.placeholder}
               rootStyle={styles.itemStyle}
               onChangeText={(value: string) =>
@@ -44,15 +39,15 @@ const FormModal = (props: IFromModal) => {
 
       <View style={styles.btnStyle}>
         <SimpleButton
-          label="Save"
-          onPress={hooks.passUserInfo}
+          label={hooks.btnLbl}
           btnStyle={{ width: "25%" }}
+          onPress={hooks.passUserInfo}
         />
 
         <SimpleButton
           label="Cancel"
-          btnStyle={styles.cancelStyle}
           onPress={props.onCloseModal}
+          btnStyle={styles.cancelStyle}
         />
       </View>
     </RootModal>

@@ -5,10 +5,12 @@ import UserCart from "./UserCart";
 
 const UsersList = ({
   data,
+  onEditUser,
   onDeleteUser,
 }: {
   data: userType[];
   onDeleteUser: (id: string) => void;
+  onEditUser: (value: userType) => void;
 }) => {
   return (
     <ScrollView
@@ -16,7 +18,14 @@ const UsersList = ({
       contentContainerStyle={styles.scrollStyle}
     >
       {data.map((el: userType, index) => {
-        return <UserCart item={el} key={index} onDeleteUser={onDeleteUser} />;
+        return (
+          <UserCart
+            item={el}
+            key={index}
+            onDeleteUser={onDeleteUser}
+            onPressEdit={() => onEditUser(el)}
+          />
+        );
       })}
     </ScrollView>
   );
