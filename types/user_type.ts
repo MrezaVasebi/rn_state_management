@@ -2,6 +2,7 @@ export type userType = {
   id: string;
   email: string;
   mobile: string;
+  gender: string;
   address: string;
   fullName: string;
 };

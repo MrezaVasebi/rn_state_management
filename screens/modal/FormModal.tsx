@@ -2,6 +2,7 @@ import React from "react";
 import { StyleSheet, View } from "react-native";
 import { AppText, SimpleButton } from "../../components";
 import InputWithLabel from "../../components/InputWithLabel";
+import { RadioButton } from "../../components/btns";
 import { userType } from "../../types";
 import { appColors } from "../../utils";
 import { RootModal } from "./components";
@@ -22,18 +23,50 @@ const FormModal = (props: IFromModal) => {
 
       <View style={styles.wrapContainer}>
         {hooks.formItem.map((el, index) => {
-          return (
-            <InputWithLabel
-              key={index}
-              value={el.value}
-              // label={el.lbl}
-              placeholder={el.placeholder}
-              rootStyle={styles.itemStyle}
-              onChangeText={(value: string) =>
-                hooks.setValues(el.identifier, value)
-              }
-            />
-          );
+          if (el.identifier === "gender") {
+            return (
+              <View key={index} style={styles.genderContainer}>
+                <AppText label={el.lbl} />
+
+                <View style={{ marginLeft: 15 }}>
+                  <RadioButton
+                    label={"Male"}
+                    circleWidth={15}
+                    circleHeight={15}
+                    lblStyle={{ fontSize: 15 }}
+                    btnStyle={{ marginBottom: 8 }}
+                    isSelected={el.value === "male"}
+                    onPress={() => hooks.setValues(el.identifier, "male")}
+                  />
+
+                  <RadioButton
+                    label={"Female"}
+                    circleWidth={15}
+                    circleHeight={15}
+                    lblStyle={{ fontSize: 15 }}
+                    isSelected={el.value === "female"}
+                    onPress={() => hooks.setValues(el.identifier, "female")}
+                  />
+                </View>
+              </View>
+            );
+          } else {
+            return (
+              <InputWithLabel
+                key={index}
+                value={el.value}
+                // label={el.lbl}
+                placeholder={el.placeholder}
+                rootStyle={{
+                  ...styles.itemStyle,
+                  width: el.identifier !== "address" ? "49%" : "100%",
+                }}
+                onChangeText={(value: string) =>
+                  hooks.setValues(el.identifier, value)
+                }
+              />
+            );
+          }
         })}
       </View>
 
@@ -70,7 +103,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   itemStyle: {
-    width: "49%",
     marginBottom: 15,
   },
   btnStyle: {
@@ -82,5 +114,10 @@ const styles = StyleSheet.create({
     width: "25%",
     marginLeft: 10,
     backgroundColor: appColors.red,
+  },
+  genderContainer: {
+    width: "49%",
+    flexDirection: "row",
+    alignItems: "center",
   },
 });

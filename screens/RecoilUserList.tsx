@@ -1,28 +1,33 @@
+import { FontAwesome } from "@expo/vector-icons";
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import { useRecoilValue } from "recoil";
 import {
   AddUser,
+  AppButton,
   AppText,
   NoData,
   RootScreen,
   UndoView,
   UsersList,
 } from "../components";
-import { usersCount, usersState } from "../st-management/recoil";
+import { filteredUsers } from "../st-management/recoil";
 import { userType } from "../types";
 import { useRecoilUserList } from "./logic";
-import { FormModal } from "./modal";
+import { FilterModal, FormModal } from "./modal";
 
 const RecoilUserList = () => {
   const hooks = useRecoilUserList();
 
-  // if you want only get the value of the recoil state -> useRecoilValue()
-  const users = useRecoilValue(usersState); // users -> []
-  const usersSize = useRecoilValue(usersCount); // usersSize -> 0
+  // if you want to read and write state in atom use useRecoilState hooks
+  // if you want to only read state in atom use useRecoilState
 
-  // if you want to get and set the value to recoil state -> useRecoilState
+  // const users = useRecoilValue(usersState); // users -> []
+  // const usersSize = useRecoilValue(usersCount); // usersSize -> 0
+
   // const [users, setUsers] = useRecoilState(usersList);
+
+  let users = useRecoilValue(filteredUsers);
 
   return (
     <RootScreen rootStyle={{ paddingHorizontal: 0 }}>
@@ -30,7 +35,15 @@ const RecoilUserList = () => {
 
       {users.length !== 0 && (
         <View style={styles.countStyle}>
-          <AppText label={`User count: ${usersSize.toString()}`} />
+          <AppText
+            lblStyle={{ opacity: 0.7 }}
+            label={`User count: ${users.length.toString()}`}
+            // label={`User count: ${usersSize.toString()}`}
+          />
+
+          <AppButton onPress={() => hooks.handleFilterModal(true)}>
+            <FontAwesome name="filter" size={20} />
+          </AppButton>
         </View>
       )}
 
@@ -55,6 +68,13 @@ const RecoilUserList = () => {
       {hooks.state.showUndoScreen && (
         <UndoView onPress={hooks.handleUndoDeletingUser} />
       )}
+
+      {hooks.state.showFilterModal && (
+        <FilterModal
+          onPressClose={() => hooks.handleFilterModal(false)}
+          onSelectFilter={(value: string) => hooks.handleApplyFilter(value)}
+        />
+      )}
     </RootScreen>
   );
 };
@@ -62,8 +82,10 @@ const RecoilUserList = () => {
 export default RecoilUserList;
 const styles = StyleSheet.create({
   countStyle: {
-    opacity: 0.7,
     marginVertical: 10,
+    flexDirection: "row",
+    alignItems: "center",
     paddingHorizontal: 20,
+    justifyContent: "space-between",
   },
 });

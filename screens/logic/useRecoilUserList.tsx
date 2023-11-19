@@ -1,24 +1,28 @@
 import { useEffect, useReducer } from "react";
 import { useRecoilState } from "recoil";
-import { usersState } from "../../st-management/recoil";
+import { userFilterState, usersState } from "../../st-management/recoil";
 import { userType } from "../../types";
 
 export const useRecoilUserList = () => {
   const [users, setUsers] = useRecoilState(usersState);
+  const [filteredUser, setFilteredUser] = useRecoilState(userFilterState);
 
   const initialState: {
     showModal: boolean;
     deletedIndex: number;
     deletedUser: userType;
     showUndoScreen: boolean;
+    showFilterModal: boolean;
   } = {
     deletedIndex: 0,
     showModal: false,
     showUndoScreen: false,
+    showFilterModal: false,
     deletedUser: {
       id: "",
       email: "",
       mobile: "",
+      gender: "",
       address: "",
       fullName: "",
     },
@@ -44,11 +48,18 @@ export const useRecoilUserList = () => {
     payload: value,
   });
 
+  const set_show_filter_modal = (value: boolean) => ({
+    type: "SHOW_FILTER_MODAL",
+    payload: value,
+  });
+
   const reducer = (
     state = initialState,
     { type, payload }: { type: string; payload: any }
   ) => {
     switch (type) {
+      case "SHOW_FILTER_MODAL":
+        return { ...state, showFilterModal: payload as boolean };
       case "SHOW_MODAL":
         return { ...state, showModal: payload as boolean };
       case "DELETED_USER":
@@ -69,11 +80,13 @@ export const useRecoilUserList = () => {
       setTimeout(() => {
         dispatch(set_show_undo_screen(false));
 
+        // clear info
         dispatch(
           set_deleted_user({
             id: "",
             email: "",
             mobile: "",
+            gender: "",
             address: "",
             fullName: "",
           })
@@ -84,11 +97,14 @@ export const useRecoilUserList = () => {
 
   const handleShowModal = (value: boolean) => {
     dispatch(set_show_modal(value));
+
+    // clear info
     dispatch(
       set_deleted_user({
         id: "",
         email: "",
         mobile: "",
+        gender: "",
         address: "",
         fullName: "",
       })
@@ -117,11 +133,13 @@ export const useRecoilUserList = () => {
         newOne = [...newOne, value];
         setUsers(newOne);
 
+        // clear info
         dispatch(
           set_deleted_user({
             id: "",
             email: "",
             mobile: "",
+            gender: "",
             address: "",
             fullName: "",
           })
@@ -143,6 +161,7 @@ export const useRecoilUserList = () => {
     dispatch(set_show_undo_screen(true));
   };
 
+  // deleting user
   const handleUndoDeletingUser = () => {
     let existedUsers = [...users];
     existedUsers.splice(state.deletedIndex, 0, state.deletedUser);
@@ -151,12 +170,25 @@ export const useRecoilUserList = () => {
     dispatch(set_show_undo_screen(false));
   };
 
+  // editing user info
   const handleEditItem = (value: userType) => {
     dispatch(set_show_modal(true));
     dispatch(set_deleted_user(value));
   };
 
+  // show, hide modal
+  const handleFilterModal = (value: boolean) => {
+    dispatch(set_show_filter_modal(value));
+  };
+
+  // show, hide modal
+  const handleApplyFilter = (value: string) => {
+    setFilteredUser(value);
+  };
+
   return {
+    handleFilterModal,
+    handleApplyFilter,
     handleEditItem,
     handleUndoDeletingUser,
     handleDeletingUser,

@@ -54,6 +54,10 @@ const UserCart = ({
 
       <View style={styles.eachRowStyle}>
         <ItemRow ans={item.email} icon="email" />
+        <ItemRow icon="user" ans={item.gender === "male" ? "Male" : "Female"} />
+      </View>
+
+      <View style={{ marginTop: 5 }}>
         <ItemRow ans={item.address} icon="address" />
       </View>
     </View>

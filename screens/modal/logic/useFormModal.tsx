@@ -21,26 +21,32 @@ export const useFormModal = (props: IFromModal) => {
     {
       value: "",
       lbl: "FullName",
-      placeholder: "FullName",
       identifier: "fullName",
+      placeholder: "FullName",
     },
     {
       value: "",
       lbl: "Mobile",
-      placeholder: "Mobile",
       identifier: "mobile",
+      placeholder: "Mobile",
     },
     {
       value: "",
       lbl: "Email",
-      placeholder: "Email",
       identifier: "email",
+      placeholder: "Email",
+    },
+    {
+      value: "",
+      lbl: "Gender",
+      placeholder: "",
+      identifier: "gender",
     },
     {
       value: "",
       lbl: "Address",
-      placeholder: "Address",
       identifier: "address",
+      placeholder: "Address",
     },
   ]);
 
@@ -75,6 +81,7 @@ export const useFormModal = (props: IFromModal) => {
     let info: userType = {
       email: "",
       mobile: "",
+      gender: "",
       address: "",
       fullName: "",
       id:

@@ -1,3 +1,4 @@
+import FilterModal from "./FilterModal";
 import FormModal from "./FormModal";
 
-export { FormModal };
+export { FilterModal, FormModal };
