@@ -1,6 +1,6 @@
 import React from "react";
 import { StyleSheet, TextInput, TextInputProps } from "react-native";
-import { appColors } from "../utils";
+import { appColors } from "../../utils";
 
 interface IAppInput {
   inputStyle?: object;

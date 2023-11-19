@@ -1,8 +1,8 @@
 import React, { memo } from "react";
 import { StyleSheet, TouchableOpacityProps, View } from "react-native";
 import { appColors } from "../../utils";
-import AppButton from "../AppButton";
-import AppText from "../AppText";
+import { AppText } from "../txts";
+import AppButton from "./AppButton";
 
 interface IRadioButtonProps {
   lblStyle?: {};

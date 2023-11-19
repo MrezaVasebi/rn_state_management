@@ -1,8 +1,8 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import { appColors } from "../utils";
-import AppButton from "./AppButton";
-import AppText from "./AppText";
+import { AppButton } from "./btns";
+import { AppText } from "./txts";
 
 const UndoView = ({ onPress }: { onPress: () => void }) => {
   return (

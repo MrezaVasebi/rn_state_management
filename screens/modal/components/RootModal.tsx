@@ -1,7 +1,8 @@
 import { AntDesign } from "@expo/vector-icons";
 import React from "react";
 import { Modal, StyleSheet, View } from "react-native";
-import { AppButton, AppText } from "../../../components";
+import { AppButton } from "../../../components/btns";
+import { AppText } from "../../../components/txts";
 import { appColors } from "../../../utils";
 
 const RootModal = ({

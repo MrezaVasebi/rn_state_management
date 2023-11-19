@@ -3,8 +3,8 @@ import React from "react";
 import { StyleSheet, View } from "react-native";
 import { userType } from "../types/user_type";
 import { appColors } from "../utils";
-import AppButton from "./AppButton";
-import AppText from "./AppText";
+import { AppButton } from "./btns";
+import { AppText } from "./txts";
 
 interface IItemRow {
   ans: string;

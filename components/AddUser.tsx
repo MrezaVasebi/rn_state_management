@@ -1,8 +1,8 @@
 import { Entypo } from "@expo/vector-icons";
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import AppButton from "./AppButton";
-import AppText from "./AppText";
+import { AppButton } from "./btns";
+import { AppText } from "./txts";
 
 const AddUser = ({ onPress }: { onPress: () => void }) => {
   return (

@@ -1,8 +1,8 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import { AppText, SimpleButton } from "../../components";
-import InputWithLabel from "../../components/InputWithLabel";
-import { RadioButton } from "../../components/btns";
+import { RadioButton, SimpleButton } from "../../components/btns";
+import { InputWithLabel } from "../../components/inputs";
+import { AppText } from "../../components/txts";
 import { userType } from "../../types";
 import { appColors } from "../../utils";
 import { RootModal } from "./components";
@@ -18,9 +18,7 @@ const FormModal = (props: IFromModal) => {
   const hooks = useFormModal(props);
 
   return (
-    <RootModal>
-      <AppText label="Add User Info" lblStyle={styles.titleStyle} />
-
+    <RootModal title="Add User Info" onPressClose={props.onCloseModal}>
       <View style={styles.wrapContainer}>
         {hooks.formItem.map((el, index) => {
           if (el.identifier === "gender") {

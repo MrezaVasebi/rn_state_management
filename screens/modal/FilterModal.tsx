@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
-import { AppText, SimpleButton } from "../../components";
-import { RadioButton } from "../../components/btns";
+import { RadioButton, SimpleButton } from "../../components/btns";
+import { AppText } from "../../components/txts";
 import { appColors } from "../../utils";
 import { RootModal } from "./components";
 

@@ -4,13 +4,13 @@ import { StyleSheet, View } from "react-native";
 import { useRecoilValue } from "recoil";
 import {
   AddUser,
-  AppButton,
-  AppText,
   NoData,
   RootScreen,
   UndoView,
   UsersList,
 } from "../components";
+import { AppButton } from "../components/btns";
+import { AppText } from "../components/txts";
 import { filteredUsers } from "../st-management/recoil";
 import { userType } from "../types";
 import { useRecoilUserList } from "./logic";

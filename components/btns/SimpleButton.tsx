@@ -1,8 +1,8 @@
 import React from "react";
 import { StyleSheet, TouchableOpacityProps } from "react-native";
-import { appColors } from "../utils";
+import { appColors } from "../../utils";
+import { AppText } from "../txts";
 import AppButton from "./AppButton";
-import AppText from "./AppText";
 
 interface IAppButton {
   label: string;
