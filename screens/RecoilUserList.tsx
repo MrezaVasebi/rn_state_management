@@ -1,16 +1,14 @@
-import { FontAwesome } from "@expo/vector-icons";
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet } from "react-native";
 import { useRecoilValue } from "recoil";
 import {
   AddUser,
+  FilteredItems,
   NoData,
   RootScreen,
   UndoView,
   UsersList,
 } from "../components";
-import { AppButton } from "../components/btns";
-import { AppText } from "../components/txts";
 import { filteredUsers } from "../st-management/recoil";
 import { userType } from "../types";
 import { useRecoilUserList } from "./logic";
@@ -34,17 +32,10 @@ const RecoilUserList = () => {
       <AddUser onPress={() => hooks.handleShowModal(true)} />
 
       {users.length !== 0 && (
-        <View style={styles.countStyle}>
-          <AppText
-            lblStyle={{ opacity: 0.7 }}
-            label={`User count: ${users.length.toString()}`}
-            // label={`User count: ${usersSize.toString()}`}
-          />
-
-          <AppButton onPress={() => hooks.handleFilterModal(true)}>
-            <FontAwesome name="filter" size={20} />
-          </AppButton>
-        </View>
+        <FilteredItems
+          count={users.length}
+          onPressFilter={() => hooks.handleFilterModal(true)}
+        />
       )}
 
       {users.length === 0 ? (
@@ -52,8 +43,8 @@ const RecoilUserList = () => {
       ) : (
         <UsersList
           data={users}
-          onEditUser={(value: userType) => hooks.handleEditItem(value)}
           onDeleteUser={(id: string) => hooks.handleDeletingUser(id)}
+          onEditUser={(value: userType) => hooks.handleEditItem(value)}
         />
       )}
 

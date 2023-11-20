@@ -148,6 +148,7 @@ export const useRecoilUserList = () => {
     }
   };
 
+  // deleting user
   const handleDeletingUser = (id: string) => {
     // deleted index
     dispatch(set_deleted_index(users.findIndex((el) => el.id === id)));
@@ -161,7 +162,7 @@ export const useRecoilUserList = () => {
     dispatch(set_show_undo_screen(true));
   };
 
-  // deleting user
+  // undo deleting user
   const handleUndoDeletingUser = () => {
     let existedUsers = [...users];
     existedUsers.splice(state.deletedIndex, 0, state.deletedUser);
