@@ -6,10 +6,11 @@ export const useCtxUserList = () => {
   const userCtx = useContext(UserContext) as UserContextType;
 
   const initialState = {
-    showModal: false as boolean,
-    showUndoScreen: false as boolean,
     deletedIndex: 0 as number,
+    showModal: false as boolean,
     deletedUser: {} as userType,
+    showUndoScreen: false as boolean,
+    showFilterModal: false as boolean,
   };
 
   const set_show_modal = (value: boolean) => ({
@@ -32,11 +33,18 @@ export const useCtxUserList = () => {
     payload: value,
   });
 
+  const set_show_filter_modal = (value: boolean) => ({
+    type: "SHOW_FILTER_MODAL",
+    payload: value,
+  });
+
   const reducer = (
     state = initialState,
     { type, payload }: { type: string; payload: any }
   ) => {
     switch (type) {
+      case "SHOW_FILTER_MODAL":
+        return { ...state, showFilterModal: payload as boolean };
       case "DELETED_USER":
         return { ...state, deletedUser: payload as userType };
       case "DELETED_INDEX":
@@ -56,24 +64,75 @@ export const useCtxUserList = () => {
     if (state.showUndoScreen) {
       setTimeout(() => {
         dispatch(set_show_undo_screen(false));
+
+        // clear info
+        dispatch(
+          set_deleted_user({
+            id: "",
+            email: "",
+            mobile: "",
+            gender: "",
+            address: "",
+            fullName: "",
+          })
+        );
       }, 2000);
     }
   }, [state.showUndoScreen]);
 
   const handleShowModal = (value: boolean): void => {
     dispatch(set_show_modal(value));
+
+    // clear info
+    dispatch(
+      set_deleted_user({
+        id: "",
+        email: "",
+        mobile: "",
+        gender: "",
+        address: "",
+        fullName: "",
+      })
+    );
   };
 
+  // save user
   const onSaveUser = (value: userType) => {
-    userCtx.onSaveUser(value);
+    if (userCtx.copiedUsers.length === 0) {
+      userCtx.onSaveUser(value);
+    } else {
+      // check user existed or not?
+      let existed = userCtx.copiedUsers.find((el) => el.id === value.id);
+
+      if (existed === undefined) {
+        userCtx.onSaveUser(value);
+      } else {
+        userCtx.onEditUser(value);
+
+        // clear info
+        dispatch(
+          set_deleted_user({
+            id: "",
+            email: "",
+            mobile: "",
+            gender: "",
+            address: "",
+            fullName: "",
+          })
+        );
+      }
+    }
   };
 
+  // deleting user
   const onDeleteUser = (id: string) => {
     // deleted index
-    dispatch(set_deleted_index(userCtx.users.findIndex((el) => el.id === id)));
+    dispatch(
+      set_deleted_index(userCtx.copiedUsers.findIndex((el) => el.id === id))
+    );
 
     // deleted user
-    let deletedUser = userCtx.users.find((el) => el.id === id);
+    let deletedUser = userCtx.copiedUsers.find((el) => el.id === id);
     if (deletedUser !== undefined) dispatch(set_deleted_user(deletedUser));
 
     userCtx.onDeleteUser(id);
@@ -81,12 +140,32 @@ export const useCtxUserList = () => {
     dispatch(set_show_undo_screen(true));
   };
 
+  // undo deleting user
   const undoDeletedUser = () => {
     userCtx.undoDeletedUser(state.deletedIndex, state.deletedUser);
     dispatch(set_show_undo_screen(false));
   };
 
+  // editing user info
+  const handleEditItem = (value: userType) => {
+    dispatch(set_show_modal(true));
+    dispatch(set_deleted_user(value));
+  };
+
+  // show, hide modal
+  const handleFilterModal = (value: boolean) => {
+    dispatch(set_show_filter_modal(value));
+  };
+
+  // show, hide modal
+  const handleApplyFilter = (type: string) => {
+    userCtx.onFilterByGender(type);
+  };
+
   return {
+    handleEditItem,
+    handleFilterModal,
+    handleApplyFilter,
     undoDeletedUser,
     state,
     onSaveUser,

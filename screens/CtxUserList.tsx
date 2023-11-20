@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import {
   AddUser,
+  FilteredItems,
   NoData,
   RootScreen,
   UndoView,
@@ -9,7 +10,7 @@ import {
 import { UserContext } from "../st-management/context-api";
 import { UserContextType, userType } from "../types";
 import { useCtxUserList } from "./logic";
-import { FormModal } from "./modal";
+import { FilterModal, FormModal } from "./modal";
 
 const CtxUserList = () => {
   const hooks = useCtxUserList();
@@ -19,14 +20,26 @@ const CtxUserList = () => {
     <RootScreen rootStyle={{ paddingHorizontal: 0 }}>
       <AddUser onPress={() => hooks.handleShowModal(true)} />
 
-      {userCtx.users.length === 0 ? (
+      {userCtx.copiedUsers.length !== 0 && (
+        <FilteredItems
+          count={userCtx.copiedUsers.length}
+          onPressFilter={() => hooks.handleFilterModal(true)}
+        />
+      )}
+
+      {userCtx.copiedUsers.length === 0 ? (
         <NoData />
       ) : (
-        <UsersList data={userCtx.users} onDeleteUser={hooks.onDeleteUser} />
+        <UsersList
+          data={userCtx.copiedUsers}
+          onDeleteUser={hooks.onDeleteUser}
+          onEditUser={(value: userType) => hooks.handleEditItem(value)}
+        />
       )}
 
       {hooks.state.showModal && (
         <FormModal
+          editedUser={hooks.state.deletedUser}
           onCloseModal={() => hooks.handleShowModal(false)}
           onSaveUser={(value: userType) => hooks.onSaveUser(value)}
         />
@@ -34,6 +47,13 @@ const CtxUserList = () => {
 
       {hooks.state.showUndoScreen && (
         <UndoView onPress={hooks.undoDeletedUser} />
+      )}
+
+      {hooks.state.showFilterModal && (
+        <FilterModal
+          onPressClose={() => hooks.handleFilterModal(false)}
+          onSelectFilter={(value: string) => hooks.handleApplyFilter(value)}
+        />
       )}
     </RootScreen>
   );
