@@ -27,10 +27,16 @@ export const filteredUsers = selector({
     switch (type) {
       case "all":
         return users;
-      case "male":
-        return users.filter((el) => el.gender === type);
-      case "female":
-        return users.filter((el) => el.gender === type);
+      case "male": {
+        let res = users.filter((el) => el.gender === type);
+        if (res.length !== 0) return res;
+        else return users;
+      }
+      case "female": {
+        let res = users.filter((el) => el.gender === type);
+        if (res.length !== 0) return res;
+        else return users;
+      }
       default:
         return users;
     }
