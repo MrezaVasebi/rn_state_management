@@ -1,5 +1,4 @@
 import React from "react";
-import { StyleSheet } from "react-native";
 import { useRecoilValue } from "recoil";
 import {
   AddUser,
@@ -71,12 +70,4 @@ const RecoilUserList = () => {
 };
 
 export default RecoilUserList;
-const styles = StyleSheet.create({
-  countStyle: {
-    marginVertical: 10,
-    flexDirection: "row",
-    alignItems: "center",
-    paddingHorizontal: 20,
-    justifyContent: "space-between",
-  },
-});
+
