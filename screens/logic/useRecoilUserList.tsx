@@ -3,17 +3,19 @@ import { useRecoilState } from "recoil";
 import { userFilterState, usersState } from "../../st-management/recoil";
 import { userType } from "../../types";
 
+interface IInit {
+  showModal: boolean;
+  deletedIndex: number;
+  deletedUser: userType;
+  showUndoScreen: boolean;
+  showFilterModal: boolean;
+}
+
 export const useRecoilUserList = () => {
   const [users, setUsers] = useRecoilState(usersState);
   const [filteredUser, setFilteredUser] = useRecoilState(userFilterState);
 
-  const initialState: {
-    showModal: boolean;
-    deletedIndex: number;
-    deletedUser: userType;
-    showUndoScreen: boolean;
-    showFilterModal: boolean;
-  } = {
+  const initialState: IInit = {
     deletedIndex: 0,
     showModal: false,
     showUndoScreen: false,
