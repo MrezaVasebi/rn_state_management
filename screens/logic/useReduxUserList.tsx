@@ -11,17 +11,19 @@ import {
 } from "../../st-management/redux-toolkit";
 import { userType } from "../../types";
 
+interface IInit {
+  showModal: boolean;
+  deletedIndex: number;
+  deletedUser: userType;
+  showUndoScreen: boolean;
+  showFilterModal: boolean;
+}
+
 export const useReduxUserList = () => {
   const userDispatch = useDispatch<AppDispatch>();
   let { users } = useSelector((state: RootState) => state.userReducer);
 
-  const initialState: {
-    showModal: boolean;
-    deletedIndex: number;
-    deletedUser: userType;
-    showUndoScreen: boolean;
-    showFilterModal: boolean;
-  } = {
+  const initialState: IInit = {
     deletedIndex: 0,
     showModal: false,
     showUndoScreen: false,
