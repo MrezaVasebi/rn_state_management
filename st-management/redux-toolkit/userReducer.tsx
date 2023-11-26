@@ -49,10 +49,7 @@ const userReducer = createSlice({
     },
     onFilterUser: (state, { payload }: PayloadAction<{ type: string }>) => {
       if (payload.type === "all") state.copiedUsers = state.users;
-      else if (payload.type === "male") {
-        let res = state.users.filter((el) => el.gender === payload.type);
-        state.copiedUsers = res.length === 0 ? state.users : res;
-      } else if (payload.type === "female") {
+      else if (payload.type === "male" || payload.type === "female") {
         let res = state.users.filter((el) => el.gender === payload.type);
         state.copiedUsers = res.length === 0 ? state.users : res;
       }

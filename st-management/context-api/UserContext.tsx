@@ -60,11 +60,7 @@ export const UserProvider = (props: IUserProvider) => {
 
   const onFilterByGender = (type: string) => {
     if (type === "all") dispatch(set_copied_users(state.users));
-    if (type === "male") {
-      let res = state.users.filter((el) => el.gender === type);
-      dispatch(set_copied_users(res.length === 0 ? state.users : res));
-    }
-    if (type === "female") {
+    else if (type === "male" || type === "female") {
       let res = state.users.filter((el) => el.gender === type);
       dispatch(set_copied_users(res.length === 0 ? state.users : res));
     }

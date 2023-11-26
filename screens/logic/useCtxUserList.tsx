@@ -3,8 +3,8 @@ import { UserContext } from "../../st-management/context-api";
 import { UserContextType, userType } from "../../types";
 
 interface IInit {
-  deletedIndex: number;
   showModal: boolean;
+  deletedIndex: number;
   deletedUser: userType;
   showUndoScreen: boolean;
   showFilterModal: boolean;
