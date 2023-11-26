@@ -2,15 +2,30 @@ import { useContext, useEffect, useReducer } from "react";
 import { UserContext } from "../../st-management/context-api";
 import { UserContextType, userType } from "../../types";
 
+interface IInit {
+  deletedIndex: number;
+  showModal: boolean;
+  deletedUser: userType;
+  showUndoScreen: boolean;
+  showFilterModal: boolean;
+}
+
 export const useCtxUserList = () => {
   const userCtx = useContext(UserContext) as UserContextType;
 
-  const initialState = {
-    deletedIndex: 0 as number,
-    showModal: false as boolean,
-    deletedUser: {} as userType,
-    showUndoScreen: false as boolean,
-    showFilterModal: false as boolean,
+  const initialState: IInit = {
+    deletedIndex: 0,
+    showModal: false,
+    showUndoScreen: false,
+    showFilterModal: false,
+    deletedUser: {
+      id: "",
+      email: "",
+      gender: "",
+      mobile: "",
+      address: "",
+      fullName: "",
+    },
   };
 
   const set_show_modal = (value: boolean) => ({
@@ -104,9 +119,11 @@ export const useCtxUserList = () => {
       // check user existed or not?
       let existed = userCtx.copiedUsers.find((el) => el.id === value.id);
 
+      // not existed, so add info
       if (existed === undefined) {
         userCtx.onSaveUser(value);
       } else {
+        // existed, so edit info
         userCtx.onEditUser(value);
 
         // clear info
