@@ -1,12 +1,17 @@
 import { useFonts } from "expo-font";
 import { Provider } from "react-redux";
 import { RecoilRoot } from "recoil";
-import { CtxUserList, RecoilUserList, ReduxUserList } from "./screens";
-import { UserProvider } from "./st-management/context-api/UserContext";
+import {
+  CtxUserList,
+  MobXUserList,
+  RecoilUserList,
+  ReduxUserList,
+} from "./screens";
+import { UserProvider } from "./st-management/context-api";
 import { store } from "./st-management/redux-toolkit";
 
 export default function App() {
-  let state_management = "recoil";
+  let state_management = "mobX";
 
   const [fontsLoaded] = useFonts({
     medium: require("./assets/fonts/Medium.ttf"),
@@ -36,5 +41,9 @@ export default function App() {
         <RecoilUserList />
       </RecoilRoot>
     );
+  }
+
+  if (state_management === "mobX") {
+    return <MobXUserList />;
   }
 }

@@ -1,15 +1,10 @@
-import { AntDesign, Entypo } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import { userType } from "../types/user_type";
 import { appColors } from "../utils";
+import CartRow from "./CartRow";
 import { AppButton } from "./btns";
-import { AppText } from "./txts";
-
-interface IItemRow {
-  ans: string;
-  icon: keyof typeof Entypo.glyphMap;
-}
 
 const UserCart = ({
   item,
@@ -20,18 +15,6 @@ const UserCart = ({
   onDeleteUser: (id: string) => void;
   onPressEdit: (item: userType) => void;
 }) => {
-  const ItemRow = ({ icon, ans }: IItemRow) => {
-    return (
-      <View style={styles.itemStyle}>
-        <View style={{ opacity: 0.5 }}>
-          <Entypo name={icon} size={20} color={appColors.grey} />
-        </View>
-
-        <AppText label={ans} lblStyle={styles.ansStyle} />
-      </View>
-    );
-  };
-
   return (
     <View style={styles.rootStyle}>
       <View style={styles.itemContainer}>
@@ -47,23 +30,25 @@ const UserCart = ({
         </AppButton>
       </View>
 
-      <View style={{ ...styles.eachRowStyle, marginBottom: 5 }}>
-        <ItemRow ans={item.fullName} icon="user" />
-        <ItemRow ans={item.mobile} icon="mobile" />
+      <View style={{ ...styles.eachRowStyle, marginBottom: 10 }}>
+        <CartRow ans={item.fullName} icon="user" />
+        <CartRow ans={item.mobile} icon="mobile" />
       </View>
 
       <View style={styles.eachRowStyle}>
-        <ItemRow ans={item.email} icon="email" />
-        <ItemRow icon="user" ans={item.gender === "male" ? "Male" : "Female"} />
+        <CartRow ans={item.email} icon="email" />
+        <CartRow icon="user" ans={item.gender === "male" ? "Male" : "Female"} />
       </View>
 
-      <View style={{ marginTop: 5 }}>
-        <ItemRow ans={item.address} icon="address" />
-      </View>
+      <CartRow
+        icon={"address"}
+        ans={item.address}
+        itemStyle={{ marginTop: 5 }}
+      />
     </View>
   );
 };
-
+``;
 export default UserCart;
 
 const styles = StyleSheet.create({
@@ -78,19 +63,8 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginBottom: 15,
     alignItems: "center",
-    justifyContent: "flex-start",
     flexDirection: "row-reverse",
-  },
-  ansStyle: {
-    flex: 1,
-    fontSize: 15,
-    marginLeft: 10,
-  },
-  itemStyle: {
-    flex: 1,
-    marginBottom: 10,
-    flexDirection: "row",
-    alignItems: "flex-start",
+    justifyContent: "flex-start",
   },
   eachRowStyle: {
     flexDirection: "row",
