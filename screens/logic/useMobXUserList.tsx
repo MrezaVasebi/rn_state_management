@@ -77,25 +77,12 @@ export const useMobXUserList = () => {
     if (state.showUndoScreen) {
       setTimeout(() => {
         dispatch(set_show_undo_screen(false));
-
-        // clear info
-        dispatch(
-          set_deleted_user({
-            id: "",
-            email: "",
-            mobile: "",
-            gender: "",
-            address: "",
-            fullName: "",
-          })
-        );
+        onClearDeletedUser();
       }, 2000);
     }
   }, [state.showUndoScreen]);
 
-  const handleShowModal = (value: boolean): void => {
-    dispatch(set_show_modal(value));
-
+  const onClearDeletedUser = () => {
     // clear info
     dispatch(
       set_deleted_user({
@@ -107,6 +94,11 @@ export const useMobXUserList = () => {
         fullName: "",
       })
     );
+  };
+
+  const handleShowModal = (value: boolean): void => {
+    dispatch(set_show_modal(value));
+    onClearDeletedUser();
   };
 
   // save user
@@ -123,18 +115,7 @@ export const useMobXUserList = () => {
       } else {
         // deleting existed user
         usersStore.onEditingUser(value);
-
-        // clear info
-        dispatch(
-          set_deleted_user({
-            id: "",
-            email: "",
-            mobile: "",
-            gender: "",
-            address: "",
-            fullName: "",
-          })
-        );
+        onClearDeletedUser();
       }
     }
   };

@@ -81,25 +81,12 @@ export const useRecoilUserList = () => {
     if (state.showUndoScreen) {
       setTimeout(() => {
         dispatch(set_show_undo_screen(false));
-
-        // clear info
-        dispatch(
-          set_deleted_user({
-            id: "",
-            email: "",
-            mobile: "",
-            gender: "",
-            address: "",
-            fullName: "",
-          })
-        );
+        onClearDeletedUser();
       }, 2000);
     }
   }, [state.showUndoScreen]);
 
-  const handleShowModal = (value: boolean) => {
-    dispatch(set_show_modal(value));
-
+  const onClearDeletedUser = () => {
     // clear info
     dispatch(
       set_deleted_user({
@@ -111,6 +98,11 @@ export const useRecoilUserList = () => {
         fullName: "",
       })
     );
+  };
+
+  const handleShowModal = (value: boolean) => {
+    dispatch(set_show_modal(value));
+    onClearDeletedUser();
   };
 
   const handleSavingUser = (value: userType) => {
@@ -135,17 +127,7 @@ export const useRecoilUserList = () => {
         newOne = [...newOne, value];
         setUsers(newOne);
 
-        // clear info
-        dispatch(
-          set_deleted_user({
-            id: "",
-            email: "",
-            mobile: "",
-            gender: "",
-            address: "",
-            fullName: "",
-          })
-        );
+        onClearDeletedUser();
       }
     }
   };

@@ -20,9 +20,7 @@ class UsersStore {
   onAddingUser = (value: userType) => {
     let newOne = [...this.copiedUsers];
     newOne.push(value);
-
-    this.users = newOne;
-    this.copiedUsers = newOne;
+    this.onUpdatingUser(newOne);
   };
 
   onEditingUser = (value: userType) => {
@@ -32,8 +30,7 @@ class UsersStore {
     newOne.splice(index, 1);
 
     newOne.push(value);
-    this.users = newOne;
-    this.copiedUsers = newOne;
+    this.onUpdatingUser(newOne);
   };
 
   onDeletingUser = (id: string) => {
@@ -44,9 +41,7 @@ class UsersStore {
   onUndoDeletingUser = (index: number, value: userType) => {
     let newOne = [...this.copiedUsers];
     newOne.splice(index, 0, value);
-
-    this.users = newOne;
-    this.copiedUsers = newOne;
+    this.onUpdatingUser(newOne);
   };
 
   onFilteringUsers = (type: string) => {
@@ -56,6 +51,11 @@ class UsersStore {
       let res = this.users.filter((el) => el.gender === type);
       this.copiedUsers = res;
     }
+  };
+
+  onUpdatingUser = (value: userType[]) => {
+    this.users = value;
+    this.copiedUsers = value;
   };
 
   get usersLength(): number {
