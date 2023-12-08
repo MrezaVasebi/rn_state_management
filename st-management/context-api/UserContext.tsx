@@ -1,4 +1,5 @@
 import React, { createContext, useReducer } from "react";
+import { todoType } from "../../types";
 import { UserContextType, userType } from "../../types/user_type";
 
 export const UserContext = createContext<UserContextType | null>(null);
@@ -11,9 +12,17 @@ export const UserProvider = (props: IUserProvider) => {
   const initialState = {
     users: [] as userType[],
     copiedUsers: [] as userType[],
+
+    todoList: [] as todoType[],
   };
 
   const set_users = (value: userType[]) => ({ type: "USERS", payload: value });
+
+  const set_todo_list = (value: todoType[]) => ({
+    type: "TODO_LIST",
+    payload: value,
+  });
+
   const set_copied_users = (value: userType[]) => ({
     type: "COPIED_USERS",
     payload: value,
@@ -26,6 +35,8 @@ export const UserProvider = (props: IUserProvider) => {
     switch (type) {
       case "COPIED_USERS":
         return { ...state, copiedUsers: payload as userType[] };
+      case "TODO_LIST":
+        return { ...state, todoList: payload as todoType[] };
       case "USERS":
         return { ...state, users: payload as userType[] };
       default:
@@ -35,6 +46,7 @@ export const UserProvider = (props: IUserProvider) => {
 
   const [state, dispatch] = useReducer(reducer, initialState);
 
+  // save user
   const onSaveUser = (value: userType) => {
     let newData: userType[] = [...state.copiedUsers];
     newData.push(value);
@@ -43,6 +55,7 @@ export const UserProvider = (props: IUserProvider) => {
     dispatch(set_copied_users(newData));
   };
 
+  // delete user
   const onDeleteUser = (id: string) => {
     let newData = state.copiedUsers.filter((el: userType) => el.id !== id);
 
@@ -50,6 +63,7 @@ export const UserProvider = (props: IUserProvider) => {
     dispatch(set_copied_users(newData));
   };
 
+  // undo delete user
   const undoDeletedUser = (index: number, user: userType) => {
     let newData = [...state.copiedUsers];
     newData.splice(index, 0, user); // adding item to specific index in array
@@ -58,6 +72,7 @@ export const UserProvider = (props: IUserProvider) => {
     dispatch(set_copied_users(newData));
   };
 
+  // filter user by gender
   const onFilterByGender = (type: string) => {
     if (type === "all") dispatch(set_copied_users(state.users));
     else if (type === "male" || type === "female") {
@@ -66,6 +81,7 @@ export const UserProvider = (props: IUserProvider) => {
     }
   };
 
+  // edit user
   const onEditUser = (value: userType) => {
     // deleting existed user
     let newOne = [...state.copiedUsers];
@@ -77,14 +93,22 @@ export const UserProvider = (props: IUserProvider) => {
     dispatch(set_copied_users(newOne));
   };
 
+  // save todo list
+  const onSaveTodoList = (value: todoType[]) => {
+    dispatch(set_todo_list(value));
+  };
+
   return (
     <UserContext.Provider
       value={{
         users: state.users,
+        todoList: state.todoList,
+        copiedUsers: state.copiedUsers,
+
         onSaveUser: onSaveUser,
         onEditUser: onEditUser,
         onDeleteUser: onDeleteUser,
-        copiedUsers: state.copiedUsers,
+        onSaveTodoList: onSaveTodoList,
         undoDeletedUser: undoDeletedUser,
         onFilterByGender: onFilterByGender,
       }}

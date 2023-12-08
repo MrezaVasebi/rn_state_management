@@ -1,4 +1,6 @@
 import AddUser from "./AddUser";
+import ApiData from "./ApiData";
+import AppSpinner from "./AppSpinner";
 import CartRow from "./CartRow";
 import FilteredItems from "./FilteredItems";
 import MainScreen from "./MainScreen";
@@ -10,6 +12,8 @@ import UsersList from "./UsersList";
 
 export {
   AddUser,
+  ApiData,
+  AppSpinner,
   CartRow,
   FilteredItems,
   MainScreen,

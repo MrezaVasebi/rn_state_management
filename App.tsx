@@ -11,7 +11,7 @@ import { UserProvider } from "./st-management/context-api";
 import { store } from "./st-management/redux-toolkit";
 
 export default function App() {
-  let state_management = "mobX";
+  let state_management = "context";
 
   const [fontsLoaded] = useFonts({
     medium: require("./assets/fonts/Medium.ttf"),

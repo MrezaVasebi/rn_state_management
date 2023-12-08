@@ -1,8 +1,10 @@
 import { useContext, useEffect, useReducer } from "react";
+import { invokeApi } from "../../hooks";
 import { UserContext } from "../../st-management/context-api";
-import { UserContextType, userType } from "../../types";
+import { UserContextType, todoType, userType } from "../../types";
 
 interface IInit {
+  loading: boolean;
   showModal: boolean;
   deletedIndex: number;
   deletedUser: userType;
@@ -14,6 +16,7 @@ export const useCtxUserList = () => {
   const userCtx = useContext(UserContext) as UserContextType;
 
   const initialState: IInit = {
+    loading: false,
     deletedIndex: 0,
     showModal: false,
     showUndoScreen: false,
@@ -53,11 +56,15 @@ export const useCtxUserList = () => {
     payload: value,
   });
 
+  const set_loading = (value: boolean) => ({ type: "LOADING", payload: value });
+
   const reducer = (
     state = initialState,
     { type, payload }: { type: string; payload: any }
   ) => {
     switch (type) {
+      case "LOADING":
+        return { ...state, loading: payload as boolean };
       case "SHOW_FILTER_MODAL":
         return { ...state, showFilterModal: payload as boolean };
       case "DELETED_USER":
@@ -74,6 +81,10 @@ export const useCtxUserList = () => {
   };
 
   const [state, dispatch] = useReducer(reducer, initialState);
+
+  useEffect(() => {
+    onFetchTodoList();
+  }, []);
 
   useEffect(() => {
     if (state.showUndoScreen) {
@@ -158,6 +169,22 @@ export const useCtxUserList = () => {
   // show, hide modal
   const handleApplyFilter = (type: string) => {
     userCtx.onFilterByGender(type);
+  };
+
+  const onFetchTodoList = async () => {
+    dispatch(set_loading(true));
+    let response = await invokeApi<todoType[]>("todos");
+    if (response !== undefined) {
+      if (typeof response === "string") {
+        // error
+        // console.log(response);
+        dispatch(set_loading(false));
+      } else if (typeof response === "object") {
+        // correct data
+        userCtx.onSaveTodoList(response);
+        dispatch(set_loading(false));
+      }
+    }
   };
 
   return {
