@@ -18,10 +18,10 @@ export type UserContextType = {
 
   loading: boolean;
 
+  onFetchUsersList: () => void;
   onDeleteUser: (id: string) => void;
   onSaveUser: (user: userType) => void;
   onEditUser: (user: userType) => void;
   onFilterByGender: (type: string) => void;
-  onFetchUsersList: (endPoint: string) => void;
   undoDeletedUser: (index: number, user: userType) => void;
 };

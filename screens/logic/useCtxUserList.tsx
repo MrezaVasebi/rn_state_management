@@ -77,7 +77,7 @@ export const useCtxUserList = () => {
 
   useEffect(() => {
     // fetching users list
-    userCtx.onFetchUsersList("users");
+    userCtx.onFetchUsersList();
   }, []);
 
   useEffect(() => {

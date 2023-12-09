@@ -101,9 +101,9 @@ export const UserProvider = (props: IUserProvider) => {
   };
 
   // fetch and save users list
-  const onFetchUsersList = async (endPoint: string) => {
+  const onFetchUsersList = async () => {
     dispatch(set_loading(true));
-    let response = await invokeApi<type_user[]>(endPoint);
+    let response = await invokeApi<type_user[]>("users");
 
     if (response === undefined || typeof response === "string") {
       // console.log(response); // error
