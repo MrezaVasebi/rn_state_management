@@ -3,30 +3,30 @@ import { ScrollView, StyleSheet } from "react-native";
 import { userType } from "../../types";
 import UserCart from "../cart/UserCart";
 
-const UsersList = ({
-  data,
-  onEditUser,
-  onDeleteUser,
-}: {
+interface IUserList {
   data: userType[];
   onDeleteUser: (id: string) => void;
   onEditUser: (value: userType) => void;
-}) => {
+}
+
+const UsersList = (props: IUserList) => {
+  let { onDeleteUser, onEditUser, data = [] } = props;
   return (
     <ScrollView
       showsVerticalScrollIndicator={false}
       contentContainerStyle={styles.scrollStyle}
     >
-      {data.map((el: userType, index) => {
-        return (
-          <UserCart
-            item={el}
-            key={index}
-            onDeleteUser={onDeleteUser}
-            onPressEdit={() => onEditUser(el)}
-          />
-        );
-      })}
+      {data?.length !== 0 &&
+        data?.map((el: userType, index) => {
+          return (
+            <UserCart
+              item={el}
+              key={index}
+              onDeleteUser={onDeleteUser}
+              onPressEdit={() => onEditUser(el)}
+            />
+          );
+        })}
     </ScrollView>
   );
 };

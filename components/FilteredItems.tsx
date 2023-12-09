@@ -4,19 +4,19 @@ import { StyleSheet, View } from "react-native";
 import { AppButton } from "./btns";
 import { AppText } from "./txts";
 
-const FilteredItems = ({
-  count,
-  onPressFilter,
-}: {
+interface IFilteredItems {
   count: number;
   onPressFilter: (value: boolean) => void;
-}) => {
+}
+
+const FilteredItems = (props: IFilteredItems) => {
+  let { onPressFilter, count = 0 } = props;
+
   return (
     <View style={styles.countStyle}>
       <AppText
         lblStyle={{ opacity: 0.7 }}
-        label={`User count: ${count.toString()}`}
-        // label={`User count: ${usersSize.toString()}`}
+        label={`User count: ${count?.toString()}`}
       />
 
       <AppButton onPress={() => onPressFilter(true)}>

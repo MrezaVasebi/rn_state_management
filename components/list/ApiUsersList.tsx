@@ -4,14 +4,16 @@ import { type_user } from "../../types/api";
 import ApiUserCart from "../cart/ApiUsersCart";
 
 const ApiUsersList = (props: { usersList: type_user[] }) => {
+  let { usersList = [] } = props;
   return (
     <ScrollView
       showsVerticalScrollIndicator={false}
       contentContainerStyle={styles.scrollStyle}
     >
-      {props.usersList.map((el: type_user, index) => {
-        return <ApiUserCart key={index} user={el} />;
-      })}
+      {usersList?.length !== 0 &&
+        usersList?.map((el: type_user, index) => {
+          return <ApiUserCart key={index} user={el} />;
+        })}
     </ScrollView>
   );
 };
