@@ -11,7 +11,7 @@ import { UserProvider } from "./st-management/context-api";
 import { store } from "./st-management/redux-toolkit";
 
 export default function App() {
-  let state_management = "redux";
+  let state_management = "recoil";
 
   const [fontsLoaded] = useFonts({
     medium: require("./assets/fonts/Medium.ttf"),

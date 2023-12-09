@@ -6,21 +6,26 @@ import { useRecoilUserList } from "./logic";
 
 const RecoilUserList = () => {
   const hooks = useRecoilUserList();
+  const users = useRecoilValue(filteredUsers); // local
 
   // if you want to read and write state in atom use useRecoilState hooks
-  // if you want to only read state in atom use useRecoilState
+  // if you want to only read state in atom use useRecoilValue
 
-  // const users = useRecoilValue(usersState); // users -> []
-  // const usersSize = useRecoilValue(usersCount); // usersSize -> 0
+  /* only for reading atom
+  const users = useRecoilValue(usersState); // users -> []
+   const usersSize = useRecoilValue(usersCount); // usersSize -> 0
+  */
 
+  /* for reading and writing atom
   // const [users, setUsers] = useRecoilState(usersList);
-
-  let users = useRecoilValue(filteredUsers);
+  */
 
   return (
     <MainScreen
-      data={users}
+      users={users} // local
       state={hooks.state}
+      loading={hooks.loading} // api
+      usersList={hooks.usersList} // api
       onSaveUser={hooks.handleSavingUser}
       handleEditItem={hooks.handleEditItem}
       onDeleteUser={hooks.handleDeletingUser}

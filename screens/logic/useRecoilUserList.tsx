@@ -1,19 +1,21 @@
 import { useEffect, useReducer } from "react";
-import { useRecoilState } from "recoil";
-import { userFilterState, usersState } from "../../st-management/recoil";
+import { useRecoilCallback, useRecoilState } from "recoil";
+import {
+  loadingState,
+  onFetchUsersList,
+  userFilterState,
+  usersListState,
+  usersState,
+} from "../../st-management/recoil";
 import { userType } from "../../types";
-
-interface IInit {
-  showModal: boolean;
-  deletedIndex: number;
-  deletedUser: userType;
-  showUndoScreen: boolean;
-  showFilterModal: boolean;
-}
+import { IInit } from "./useCtxUserList";
 
 export const useRecoilUserList = () => {
-  const [users, setUsers] = useRecoilState(usersState);
+  const [users, setUsers] = useRecoilState(usersState); // local
   const [filteredUser, setFilteredUser] = useRecoilState(userFilterState);
+
+  const [loading, setLoading] = useRecoilState(loadingState); // api
+  const [usersList, setUserList] = useRecoilState(usersListState); // api
 
   const initialState: IInit = {
     deletedIndex: 0,
@@ -78,6 +80,11 @@ export const useRecoilUserList = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
+    // fetching users list
+    fetchDataCallback();
+  }, []);
+
+  useEffect(() => {
     if (state.showUndoScreen) {
       setTimeout(() => {
         dispatch(set_show_undo_screen(false));
@@ -85,6 +92,23 @@ export const useRecoilUserList = () => {
       }, 2000);
     }
   }, [state.showUndoScreen]);
+
+  const fetchDataCallback = useRecoilCallback(
+    ({ snapshot, set }) =>
+      async () => {
+        try {
+          setLoading(true);
+
+          const response = await snapshot.getPromise(onFetchUsersList);
+          setUserList(response);
+
+          setLoading(false);
+        } catch (error) {
+          setLoading(false);
+          console.log(error);
+        }
+      }
+  );
 
   const onClearDeletedUser = () => {
     // clear info
@@ -172,6 +196,8 @@ export const useRecoilUserList = () => {
   };
 
   return {
+    loading,
+    usersList,
     handleFilterModal,
     handleApplyFilter,
     handleEditItem,
