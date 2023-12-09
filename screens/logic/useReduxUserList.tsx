@@ -11,14 +11,7 @@ import {
   undoDeletedUser,
 } from "../../st-management/redux-toolkit";
 import { userType } from "../../types";
-
-export interface IInit {
-  showModal: boolean;
-  deletedIndex: number;
-  deletedUser: userType;
-  showUndoScreen: boolean;
-  showFilterModal: boolean;
-}
+import { IInit } from "./useCtxUserList";
 
 export const useReduxUserList = () => {
   const userDispatch = useDispatch<AppDispatch>();
