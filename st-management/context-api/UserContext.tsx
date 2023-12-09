@@ -1,5 +1,5 @@
 import React, { createContext, useReducer } from "react";
-import { todoType } from "../../types";
+import { type_user } from "../../types/api";
 import { UserContextType, userType } from "../../types/user_type";
 
 export const UserContext = createContext<UserContextType | null>(null);
@@ -13,13 +13,13 @@ export const UserProvider = (props: IUserProvider) => {
     users: [] as userType[],
     copiedUsers: [] as userType[],
 
-    todoList: [] as todoType[],
+    usersList: [] as type_user[],
   };
 
   const set_users = (value: userType[]) => ({ type: "USERS", payload: value });
 
-  const set_todo_list = (value: todoType[]) => ({
-    type: "TODO_LIST",
+  const set_users_list = (value: type_user[]) => ({
+    type: "USERS_LIST",
     payload: value,
   });
 
@@ -35,8 +35,8 @@ export const UserProvider = (props: IUserProvider) => {
     switch (type) {
       case "COPIED_USERS":
         return { ...state, copiedUsers: payload as userType[] };
-      case "TODO_LIST":
-        return { ...state, todoList: payload as todoType[] };
+      case "USERS_LIST":
+        return { ...state, usersList: payload as type_user[] };
       case "USERS":
         return { ...state, users: payload as userType[] };
       default:
@@ -93,22 +93,23 @@ export const UserProvider = (props: IUserProvider) => {
     dispatch(set_copied_users(newOne));
   };
 
-  // save todo list
-  const onSaveTodoList = (value: todoType[]) => {
-    dispatch(set_todo_list(value));
+  // save users list
+  const onSaveUsersList = (value: type_user[]) => {
+    dispatch(set_users_list(value));
   };
 
   return (
     <UserContext.Provider
       value={{
-        users: state.users,
-        todoList: state.todoList,
-        copiedUsers: state.copiedUsers,
+        usersList: state.usersList, // api
+        onSaveUsersList: onSaveUsersList, // api
+
+        users: state.users, // local
+        copiedUsers: state.copiedUsers, // local
 
         onSaveUser: onSaveUser,
         onEditUser: onEditUser,
         onDeleteUser: onDeleteUser,
-        onSaveTodoList: onSaveTodoList,
         undoDeletedUser: undoDeletedUser,
         onFilterByGender: onFilterByGender,
       }}

@@ -1,10 +1,12 @@
 import { useContext, useEffect, useReducer } from "react";
 import { invokeApi } from "../../hooks";
 import { UserContext } from "../../st-management/context-api";
-import { UserContextType, todoType, userType } from "../../types";
+import { UserContextType, userType } from "../../types";
+import { type_user } from "../../types/api";
 
-interface IInit {
+export interface IInit {
   loading: boolean;
+
   showModal: boolean;
   deletedIndex: number;
   deletedUser: userType;
@@ -17,6 +19,7 @@ export const useCtxUserList = () => {
 
   const initialState: IInit = {
     loading: false,
+
     deletedIndex: 0,
     showModal: false,
     showUndoScreen: false,
@@ -83,7 +86,7 @@ export const useCtxUserList = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
-    onFetchTodoList();
+    onFetchUsersList();
   }, []);
 
   useEffect(() => {
@@ -171,19 +174,19 @@ export const useCtxUserList = () => {
     userCtx.onFilterByGender(type);
   };
 
-  const onFetchTodoList = async () => {
+  // fetch todo list
+  const onFetchUsersList = async () => {
     dispatch(set_loading(true));
-    let response = await invokeApi<todoType[]>("todos");
-    if (response !== undefined) {
-      if (typeof response === "string") {
-        // error
-        // console.log(response);
-        dispatch(set_loading(false));
-      } else if (typeof response === "object") {
-        // correct data
-        userCtx.onSaveTodoList(response);
-        dispatch(set_loading(false));
-      }
+    let response = await invokeApi<type_user[]>("users");
+
+    if (response === undefined || typeof response === "string") {
+      // console.log(response); // error
+      dispatch(set_loading(false));
+      userCtx.onSaveUsersList([] as type_user[]);
+    } else if (typeof response === "object") {
+      // correct data
+      userCtx.onSaveUsersList(response);
+      dispatch(set_loading(false));
     }
   };
 

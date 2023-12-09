@@ -1,4 +1,4 @@
-import { todoType } from "./todos_type";
+import { type_user } from "./api";
 
 export type userType = {
   id: string;
@@ -11,14 +11,15 @@ export type userType = {
 
 // this section in used in context-api
 export type UserContextType = {
-  users: userType[];
-  todoList: todoType[];
+  users: userType[]; // local
   copiedUsers: userType[];
+
+  usersList: type_user[]; // api
+  onSaveUsersList: (value: type_user[]) => void;
 
   onDeleteUser: (id: string) => void;
   onSaveUser: (user: userType) => void;
   onEditUser: (user: userType) => void;
   onFilterByGender: (type: string) => void;
-  onSaveTodoList: (value: todoType[]) => void;
   undoDeletedUser: (index: number, user: userType) => void;
 };

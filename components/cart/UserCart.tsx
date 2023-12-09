@@ -1,10 +1,10 @@
 import { AntDesign } from "@expo/vector-icons";
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import { userType } from "../types/user_type";
-import { appColors } from "../utils";
-import CartRow from "./CartRow";
-import { AppButton } from "./btns";
+import { userType } from "../../types/user_type";
+import { appColors } from "../../utils";
+import CartRow from "../CartRow";
+import { AppButton } from "../btns";
 
 const UserCart = ({
   item,

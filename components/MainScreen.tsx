@@ -1,30 +1,17 @@
 import React, { useState } from "react";
-import { ScrollView, View } from "react-native";
-import { FilterModal, FormModal } from "../screens/modal";
-import { todoType, userType } from "../types";
-import AddUser from "./AddUser";
+import { IInit } from "../screens/logic";
+import { userType } from "../types";
+import { type_user } from "../types/api";
 import ApiData from "./ApiData";
-import FilteredItems from "./FilteredItems";
-import NoData from "./NoData";
+import LocalData from "./LocalData";
 import RootScreen from "./RootScreen";
-import UndoView from "./UndoView";
-import UsersList from "./UsersList";
 import { SwitchTab } from "./btns";
 
-interface IInit {
-  showModal: boolean;
-  deletedIndex: number;
-  deletedUser: userType;
-  showUndoScreen: boolean;
-  showFilterModal: boolean;
-}
-
 interface IMainScreen {
-  loading: boolean;
-  todoList: todoType[];
+  usersList: type_user[]; // api
 
   state: IInit;
-  users: userType[];
+  users: userType[]; // local
   undoDeletedUser: () => void;
   onDeleteUser: (is: string) => void;
   onSaveUser: (value: userType) => void;
@@ -49,54 +36,19 @@ const MainScreen = (props: IMainScreen) => {
       />
 
       {tabName === "Local Data" ? (
-        <View style={{ flex: 1 }}>
-          <AddUser onPress={() => props?.handleShowModal(true)} />
-
-          {props?.users?.length !== 0 && (
-            <FilteredItems
-              count={props?.users?.length}
-              onPressFilter={() => props.handleFilterModal(true)}
-            />
-          )}
-
-          <ScrollView
-            showsVerticalScrollIndicator={false}
-            contentContainerStyle={{ flexGrow: 1 }}
-          >
-            {props?.users?.length === 0 ? (
-              <NoData />
-            ) : (
-              <UsersList
-                data={props?.users}
-                onDeleteUser={props?.onDeleteUser}
-                onEditUser={(value: userType) => props?.handleEditItem(value)}
-              />
-            )}
-
-            {props?.state?.showModal && (
-              <FormModal
-                editedUser={props?.state?.deletedUser}
-                onCloseModal={() => props?.handleShowModal(false)}
-                onSaveUser={(value: userType) => props?.onSaveUser(value)}
-              />
-            )}
-
-            {props?.state?.showUndoScreen && (
-              <UndoView onPress={props?.undoDeletedUser} />
-            )}
-
-            {props?.state?.showFilterModal && (
-              <FilterModal
-                onPressClose={() => props?.handleFilterModal(false)}
-                onSelectFilter={(value: string) =>
-                  props?.handleApplyFilter(value)
-                }
-              />
-            )}
-          </ScrollView>
-        </View>
+        <LocalData
+          state={props.state}
+          users={props.users}
+          onSaveUser={props.onSaveUser}
+          onDeleteUser={props.onDeleteUser}
+          handleEditItem={props.handleEditItem}
+          undoDeletedUser={props.undoDeletedUser}
+          handleShowModal={props.handleShowModal}
+          handleFilterModal={props.handleFilterModal}
+          handleApplyFilter={props.handleApplyFilter}
+        />
       ) : (
-        <ApiData loading={props.loading} todoList={props.todoList} />
+        <ApiData usersList={props.usersList} loading={props.state.loading} />
       )}
     </RootScreen>
   );

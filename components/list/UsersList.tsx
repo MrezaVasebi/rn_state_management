@@ -1,7 +1,7 @@
 import React from "react";
 import { ScrollView, StyleSheet } from "react-native";
-import { userType } from "../types";
-import UserCart from "./UserCart";
+import { userType } from "../../types";
+import UserCart from "../cart/UserCart";
 
 const UsersList = ({
   data,

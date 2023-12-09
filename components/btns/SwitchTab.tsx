@@ -61,6 +61,7 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     flexDirection: "row",
     justifyContent: "space-between",
+    backgroundColor: appColors.white,
     borderColor: appColors.borderColors.grey,
   },
   btnStyle: {

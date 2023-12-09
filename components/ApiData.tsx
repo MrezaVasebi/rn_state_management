@@ -1,13 +1,13 @@
 import React from "react";
-import { FlatList, StyleSheet, View } from "react-native";
-import { todoType } from "../types";
+import { StyleSheet, View } from "react-native";
+import { type_user } from "../types/api";
 import AppSpinner from "./AppSpinner";
 import NoData from "./NoData";
-import { AppText } from "./txts";
+import { ApiUsersList } from "./list";
 
 interface IApiData {
   loading: boolean;
-  todoList: todoType[];
+  usersList: type_user[];
 }
 
 const ApiData = (props: IApiData) => {
@@ -15,19 +15,10 @@ const ApiData = (props: IApiData) => {
     <View style={styles.rootStyle}>
       {props.loading ? (
         <AppSpinner />
-      ) : props.todoList.length === 0 ? (
+      ) : props.usersList.length === 0 ? (
         <NoData />
       ) : (
-        <FlatList
-          data={props.todoList}
-          renderItem={({ item }) => {
-            return (
-              <View>
-                <AppText label={item.userId.toString()} />
-              </View>
-            );
-          }}
-        />
+        <ApiUsersList usersList={props.usersList} />
       )}
     </View>
   );
@@ -38,5 +29,10 @@ export default ApiData;
 const styles = StyleSheet.create({
   rootStyle: {
     flex: 1,
+  },
+  btnStyle: {
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    alignItems: "flex-end",
   },
 });

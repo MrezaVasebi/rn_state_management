@@ -11,9 +11,8 @@ const CtxUserList = () => {
   return (
     <MainScreen
       state={hooks.state}
-      todoList={userCtx.todoList}
-      users={userCtx.copiedUsers}
-      loading={hooks.state.loading}
+      users={userCtx.copiedUsers} // local users
+      usersList={userCtx.usersList} // api users
       onSaveUser={hooks.onSaveUser}
       onDeleteUser={hooks.onDeleteUser}
       handleEditItem={hooks.handleEditItem}
