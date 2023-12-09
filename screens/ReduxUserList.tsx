@@ -4,16 +4,18 @@ import { MainScreen } from "../components";
 import { RootState } from "../st-management/redux-toolkit";
 import { useReduxUserList } from "./logic";
 
-const UserList = () => {
+const ReduxUserList = () => {
   const hooks = useReduxUserList();
-  let { copiedUsers: users } = useSelector(
+  let { copiedUsers, loading, usersList } = useSelector(
     (state: RootState) => state.userReducer
   );
 
   return (
     <MainScreen
-      data={users}
+      loading={loading} // loading
+      users={copiedUsers} // local
       state={hooks.state}
+      usersList={usersList} // api
       onSaveUser={hooks.handleSavingUser}
       handleEditItem={hooks.handleEditItem}
       onDeleteUser={hooks.handleDeletingUser}
@@ -25,4 +27,4 @@ const UserList = () => {
   );
 };
 
-export default UserList;
+export default ReduxUserList;

@@ -5,13 +5,14 @@ import {
   RootState,
   onDeleteUser,
   onEditUser,
+  onFetchUsersList,
   onFilterUser,
   onSaveUser,
   undoDeletedUser,
 } from "../../st-management/redux-toolkit";
 import { userType } from "../../types";
 
-interface IInit {
+export interface IInit {
   showModal: boolean;
   deletedIndex: number;
   deletedUser: userType;
@@ -84,6 +85,11 @@ export const useReduxUserList = () => {
   };
 
   const [state, dispatch] = useReducer(reducer, initialState);
+
+  useEffect(() => {
+    // fetching users list
+    userDispatch(onFetchUsersList());
+  }, []);
 
   useEffect(() => {
     if (state.showUndoScreen) {

@@ -1,17 +1,40 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { invokeApi } from "../../hooks";
 import { userType } from "../../types";
+import { type_user } from "../../types/api";
 
 type initType = {
-  users: userType[];
+  loading: boolean; // api
+  usersList: type_user[]; // api
+
+  users: userType[]; // local
   filteredType: string;
   copiedUsers: userType[];
 };
 
 const initialState: initType = {
+  loading: false, // api
+  usersList: [] as type_user[],
+
   filteredType: "all",
   users: [] as userType[],
   copiedUsers: [] as userType[],
 };
+
+/* createAsyncThunk is called with two arguments.
+The first argument is a string “get/usersList”, which represents the name of the thunk action.
+This name will be used to generate action types for the pending, fulfilled, and rejected states of the asynchronous operation.
+The second argument is an asynchronous function that will be executed when the thunk action is dispatched. */
+
+// fetch users list
+export const onFetchUsersList = createAsyncThunk("get/usersList", async () => {
+  let response = await invokeApi<type_user[]>("users");
+  if (response == undefined || typeof response === "string") {
+    return [] as type_user[];
+  } else {
+    return response;
+  }
+});
 
 const userReducer = createSlice({
   name: "users",
@@ -54,6 +77,18 @@ const userReducer = createSlice({
         state.copiedUsers = res.length === 0 ? state.users : res;
       }
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(onFetchUsersList.pending, (state, { payload }) => {
+      state.loading = true;
+    });
+    builder.addCase(onFetchUsersList.fulfilled, (state, { payload }) => {
+      state.loading = false;
+      state.usersList = payload;
+    });
+    builder.addCase(onFetchUsersList.rejected, (state, { payload }) => {
+      state.loading = false;
+    });
   },
 });
 
