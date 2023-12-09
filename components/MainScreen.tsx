@@ -8,6 +8,7 @@ import RootScreen from "./RootScreen";
 import { SwitchTab } from "./btns";
 
 interface IMainScreen {
+  loading: boolean;
   usersList: type_user[]; // api
 
   state: IInit;
@@ -48,7 +49,7 @@ const MainScreen = (props: IMainScreen) => {
           handleApplyFilter={props.handleApplyFilter}
         />
       ) : (
-        <ApiData usersList={props.usersList} loading={props.state.loading} />
+        <ApiData usersList={props.usersList} loading={props.loading} />
       )}
     </RootScreen>
   );

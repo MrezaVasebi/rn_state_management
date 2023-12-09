@@ -1,16 +1,12 @@
 import React from "react";
-import { StyleSheet, TouchableOpacity } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { type_user } from "../../types/api";
 import { appColors } from "../../utils";
 import CartRow from "../CartRow";
 
 const ApiUserCart = ({ user }: { user: type_user }) => {
   return (
-    <TouchableOpacity
-      onPress={() => {}}
-      activeOpacity={0.5}
-      style={styles.rootStyle}
-    >
+    <View style={styles.rootStyle}>
       <CartRow ans={user?.id} lbl={"UserId"} />
       <CartRow
         ans={user?.name}
@@ -24,7 +20,7 @@ const ApiUserCart = ({ user }: { user: type_user }) => {
         itemStyle={{ marginVertical: 5 }}
       />
       <CartRow ans={user?.website} lbl="Website" />
-    </TouchableOpacity>
+    </View>
   );
 };
 

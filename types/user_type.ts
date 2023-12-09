@@ -15,11 +15,13 @@ export type UserContextType = {
   copiedUsers: userType[];
 
   usersList: type_user[]; // api
-  onSaveUsersList: (value: type_user[]) => void;
+
+  loading: boolean;
 
   onDeleteUser: (id: string) => void;
   onSaveUser: (user: userType) => void;
   onEditUser: (user: userType) => void;
   onFilterByGender: (type: string) => void;
+  onFetchUsersList: (endPoint: string) => void;
   undoDeletedUser: (index: number, user: userType) => void;
 };

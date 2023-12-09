@@ -1,4 +1,5 @@
 import React, { createContext, useReducer } from "react";
+import { invokeApi } from "../../hooks";
 import { type_user } from "../../types/api";
 import { UserContextType, userType } from "../../types/user_type";
 
@@ -14,9 +15,13 @@ export const UserProvider = (props: IUserProvider) => {
     copiedUsers: [] as userType[],
 
     usersList: [] as type_user[],
+
+    loading: false as boolean,
   };
 
   const set_users = (value: userType[]) => ({ type: "USERS", payload: value });
+
+  const set_loading = (value: boolean) => ({ type: "LOADING", payload: value });
 
   const set_users_list = (value: type_user[]) => ({
     type: "USERS_LIST",
@@ -33,6 +38,8 @@ export const UserProvider = (props: IUserProvider) => {
     { type, payload }: { type: string; payload: any }
   ) => {
     switch (type) {
+      case "LOADING":
+        return { ...state, loading: payload as boolean };
       case "COPIED_USERS":
         return { ...state, copiedUsers: payload as userType[] };
       case "USERS_LIST":
@@ -93,25 +100,39 @@ export const UserProvider = (props: IUserProvider) => {
     dispatch(set_copied_users(newOne));
   };
 
-  // save users list
-  const onSaveUsersList = (value: type_user[]) => {
-    dispatch(set_users_list(value));
+  // fetch and save users list
+  const onFetchUsersList = async (endPoint: string) => {
+    dispatch(set_loading(true));
+    let response = await invokeApi<type_user[]>(endPoint);
+
+    if (response === undefined || typeof response === "string") {
+      // console.log(response); // error
+
+      dispatch(set_loading(false));
+      dispatch(set_users_list([] as type_user[]));
+    } else if (typeof response === "object") {
+      // correct data
+      dispatch(set_loading(false));
+      dispatch(set_users_list(response));
+    }
   };
 
   return (
     <UserContext.Provider
       value={{
         usersList: state.usersList, // api
-        onSaveUsersList: onSaveUsersList, // api
 
         users: state.users, // local
         copiedUsers: state.copiedUsers, // local
+
+        loading: state.loading,
 
         onSaveUser: onSaveUser,
         onEditUser: onEditUser,
         onDeleteUser: onDeleteUser,
         undoDeletedUser: undoDeletedUser,
         onFilterByGender: onFilterByGender,
+        onFetchUsersList: onFetchUsersList,
       }}
     >
       {props.children}

@@ -11,6 +11,7 @@ const CtxUserList = () => {
   return (
     <MainScreen
       state={hooks.state}
+      loading={userCtx.loading} // loading
       users={userCtx.copiedUsers} // local users
       usersList={userCtx.usersList} // api users
       onSaveUser={hooks.onSaveUser}
