@@ -11,7 +11,9 @@ const MobXUserList = observer(() => {
     <MainScreen
       state={hooks.state}
       onSaveUser={hooks.onSaveUser}
-      data={usersStore.copiedUsers}
+      loading={usersStore.loading} // api
+      usersList={usersStore.usersList} // api
+      users={usersStore.copiedUsers} // local
       onDeleteUser={hooks.onDeleteUser}
       handleEditItem={hooks.handleEditItem}
       handleShowModal={hooks.handleShowModal}

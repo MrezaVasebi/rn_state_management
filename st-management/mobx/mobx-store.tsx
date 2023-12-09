@@ -1,19 +1,36 @@
-import { action, computed, makeObservable, observable } from "mobx";
+import {
+  action,
+  computed,
+  makeObservable,
+  observable,
+  runInAction,
+} from "mobx";
+import { invokeApi } from "../../hooks";
 import { userType } from "../../types";
+import { type_user } from "../../types/api";
 
 class UsersStore {
   users: userType[] = [];
   copiedUsers: userType[] = [];
 
+  loading: boolean = false;
+  usersList: type_user[] = [];
+
   constructor() {
     makeObservable(this, {
+      usersLength: computed, // returned data
+
+      copiedUsers: observable, // local
+
+      loading: observable, // api
+      usersList: observable, // api
+
       onAddingUser: action,
       onEditingUser: action,
-      usersLength: computed,
       onDeletingUser: action,
-      copiedUsers: observable,
       onFilteringUsers: action,
       onUndoDeletingUser: action,
+      onFetchUsersList: action, // api
     });
   }
 
@@ -56,6 +73,24 @@ class UsersStore {
   onUpdatingUser = (value: userType[]) => {
     this.users = value;
     this.copiedUsers = value;
+  };
+
+  onFetchUsersList = async () => {
+    runInAction(() => {
+      this.loading = true;
+    });
+    const response = await invokeApi<type_user[]>("users");
+    if (response === undefined || typeof response === "string") {
+      runInAction(() => {
+        this.loading = false;
+        this.usersList = [] as type_user[];
+      });
+    } else {
+      runInAction(() => {
+        this.loading = false;
+        this.usersList = response;
+      });
+    }
   };
 
   get usersLength(): number {

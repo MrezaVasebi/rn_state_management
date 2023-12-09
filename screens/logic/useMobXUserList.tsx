@@ -1,14 +1,7 @@
 import { useEffect, useReducer } from "react";
 import { usersStore } from "../../st-management/mobx";
 import { userType } from "../../types";
-
-interface IInit {
-  showModal: boolean;
-  deletedIndex: number;
-  deletedUser: userType;
-  showUndoScreen: boolean;
-  showFilterModal: boolean;
-}
+import { IInit } from "./useCtxUserList";
 
 export const useMobXUserList = () => {
   const initialState: IInit = {
@@ -72,6 +65,11 @@ export const useMobXUserList = () => {
   };
 
   const [state, dispatch] = useReducer(reducer, initialState);
+
+  useEffect(() => {
+    // fetching users list
+    usersStore.onFetchUsersList();
+  }, []);
 
   useEffect(() => {
     if (state.showUndoScreen) {

@@ -11,14 +11,15 @@ interface IApiData {
 }
 
 const ApiData = (props: IApiData) => {
+  let { usersList = [] as type_user[] } = props;
   return (
     <View style={styles.rootStyle}>
       {props.loading ? (
         <AppSpinner />
-      ) : props.usersList.length === 0 ? (
+      ) : usersList?.length === 0 ? (
         <NoData />
       ) : (
-        <ApiUsersList usersList={props.usersList} />
+        <ApiUsersList usersList={usersList} />
       )}
     </View>
   );
