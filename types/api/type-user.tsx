@@ -1,18 +1,20 @@
 export type type_address = {
-  street: string;
-  suite: string;
   city: string;
+  suite: string;
+  geo: type_geo;
+  street: string;
   zipcode: string;
-  geo: {
-    lat: string;
-    lng: string;
-  };
 };
 
 export type type_user_company = {
   name: string;
-  catchPhrase: string;
   bs: string;
+  catchPhrase: string;
+};
+
+export type type_geo = {
+  lat: string;
+  lng: string;
 };
 
 export type type_user = {
