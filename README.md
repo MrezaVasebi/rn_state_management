@@ -28,4 +28,5 @@ To show how we can use different React-Native state management in the applicatio
 3. in terminal -> npm install
 4. npx expo start
 
-- I know the application may have some problems. I try to fix them and make the application better and better. Please forgive your own greatness.
+Note: The application may have some problems. I try to fix them and make it better.
+Please forgive your own greatness.
